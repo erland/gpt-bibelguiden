@@ -1,11 +1,11 @@
-# Bibelguiden GPT – startpaket v4
+# Bibelguiden GPT – startpaket v4-dialog
 
 Detta paket innehåller material för att skapa en egen GPT för bibelstudier, smågrupper, självstudier och tematiska bibelstudieböcker.
 
 ## Viktigt i v4
 - `gpt/instructions.md` är komprimerad till under 8000 tecken.
-- `knowledge/` innehåller 8 filer, alltså väl under GPT Builder-gränsen på 20 Knowledge-filer.
-- Smågrupp, självstudie, studiebok och transformering stöds som separata arbetslägen.
+- `knowledge/` innehåller 9 filer, alltså väl under GPT Builder-gränsen på 20 Knowledge-filer.
+- Smågrupp, självstudie, studiebok och transformering stöds som separata arbetslägen. Denna justerade version har dessutom dialogdriven start där användaren kan börja mycket generellt och GPT:n hjälper till att välja inriktning.
 
 ## Rekommenderad användning i GPT Builder
 1. Skapa en ny GPT.
@@ -24,3 +24,10 @@ Detta paket innehåller material för att skapa en egen GPT för bibelstudier, s
 
 ## Rekommenderad designprincip
 Bibelguiden ska inte återpublicera längre bibeltexter från moderna översättningar. Den ska i första hand ge referenser och direktlänkar till rätt bibeltext, och sedan hjälpa med frågor, kontext, samband, fördjupning och praktisk tillämpning.
+
+
+## Nytt i v4-dialog
+- Bygger på den bifogade v4-versionen.
+- Lägger till dialogdriven behovsanalys före materialproduktion.
+- Stödjer generella startfrågor där GPT:n ger förslag och ställer få följdfrågor åt gången.
+- Behåller v4:s mallar, exempel och knowledge-struktur.

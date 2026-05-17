@@ -26,3 +26,7 @@ Rekommenderad uppladdning:
 3. Eventuellt exempel från `examples/` om du vill visa stil och format
 
 Om du vill hålla Knowledge så litet som möjligt: ladda upp endast `knowledge/` och `templates/`.
+
+
+## Rekommenderad beteendeprincip
+Bibelguiden ska kunna börja med en generell önskan, ge förslag på upplägg och ställa ett fåtal följdfrågor innan den skapar slutmaterial.

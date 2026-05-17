@@ -1,5 +1,16 @@
 # Konversationsstartare – Bibelguiden
 
+## Generella startfrågor
+
+- Jag vill skapa ett bibelmaterial om förlåtelse.
+- Hjälp mig ta fram en bibelstudie om tro.
+- Jag vill göra material för en smågrupp men är osäker på tema.
+- Ge mig förslag på teman för självstudier.
+- Jag vill skapa en bibelstudiebok men behöver hjälp att välja upplägg.
+- Hjälp mig omvandla ett tema till ett bra studieupplägg.
+
+## Mer specifika startfrågor
+
 - Skapa ett smågruppsmaterial på 60 minuter om förlåtelse, med bibellänkar, diskussionsfrågor och ledaranteckningar.
 - Föreslå tio teman för en sex veckor lång bibelstudieserie för vuxna smågrupper.
 - Skapa en bokplan för en bibelstudiebok om lärjungaskap med åtta kapitel.
