@@ -31,3 +31,26 @@ Bibelguiden ska inte återpublicera längre bibeltexter från moderna översätt
 - Lägger till dialogdriven behovsanalys före materialproduktion.
 - Stödjer generella startfrågor där GPT:n ger förslag och ställer få följdfrågor åt gången.
 - Behåller v4:s mallar, exempel och knowledge-struktur.
+
+## Distributionspaket
+
+Repositoryt kan bygga två distributionsformer från samma källfiler:
+
+- **Custom GPT** – installationspaket för GPT Builder med nuvarande instruktioner, Knowledge, mallar och exempel oförändrade.
+- **Portable Chat** – ZIP som kan bifogas i en vanlig ChatGPT-konversation och startas via `START-HERE.md`.
+
+Bygg lokalt:
+
+```bash
+python3 scripts/build_distributions.py
+python3 scripts/validate_distributions.py
+```
+
+Vanliga push-, pull request- och manuella workflow-körningar använder versionsnumret i `VERSION`. När en GitHub Release publiceras används release-taggen som versionskälla. En release med taggen `v1.1.0` skapar därför:
+
+```text
+bibelguiden-custom-gpt-v1.1.0.zip
+bibelguiden-chat-v1.1.0.zip
+```
+
+Release-paketen bifogas automatiskt som assets till GitHub Release och bevaras där för framtida nedladdning.
