@@ -35,18 +35,38 @@ def validate(version: str, dist: Path) -> None:
                 raise RuntimeError(f"Korrupt ZIP-medlem i {p.name}: {bad}")
 
     with zipfile.ZipFile(custom_path) as zf:
-        assert_same(zf, "gpt/instructions.md", ROOT / "gpt/instructions.md")
+        assert_same(zf, "gpt/instructions.md", ROOT / "assistant/instructions.md")
         assert_same(zf, "gpt/conversation-starters.md", ROOT / "gpt/conversation-starters.md")
         for src in KNOWLEDGE + TEMPLATES + EXAMPLES:
             assert_same(zf, src.relative_to(ROOT).as_posix(), src)
+        custom_instr = zf.read("gpt/instructions.md").decode("utf-8")
+        for marker in [
+            "ställ högst 3 följdfrågor åt gången",
+            "Återge inte långa bibelavsnitt från moderna upphovsrättsskyddade översättningar.",
+            "Skilj alltid mellan bibeltext, historisk bakgrund, språkliga observationer, teologisk tolkning och praktisk tillämpning.",
+            "Standard: ekumeniskt och balanserat.",
+            "Skapa tydlig Markdown med konsekventa rubriker, listor och länkar.",
+        ]:
+            if marker not in custom_instr:
+                raise RuntimeError("Custom GPT saknar kritisk beteendemarkör: " + marker)
         if zf.read("VERSION").decode().strip() != version:
             raise RuntimeError("Fel VERSION i Custom GPT-paketet")
 
     with zipfile.ZipFile(chat_path) as zf:
-        assert_same(zf, "assistant/instructions.md", ROOT / "gpt/instructions.md")
+        assert_same(zf, "assistant/instructions.md", ROOT / "assistant/instructions.md")
         assert_same(zf, "assistant/conversation-starters.md", ROOT / "gpt/conversation-starters.md")
         for src in KNOWLEDGE + TEMPLATES + EXAMPLES:
             assert_same(zf, src.relative_to(ROOT).as_posix(), src)
+        chat_instr = zf.read("assistant/instructions.md").decode("utf-8")
+        for marker in [
+            "ställ högst 3 följdfrågor åt gången",
+            "Återge inte långa bibelavsnitt från moderna upphovsrättsskyddade översättningar.",
+            "Skilj alltid mellan bibeltext, historisk bakgrund, språkliga observationer, teologisk tolkning och praktisk tillämpning.",
+            "Standard: ekumeniskt och balanserat.",
+            "Skapa tydlig Markdown med konsekventa rubriker, listor och länkar.",
+        ]:
+            if marker not in chat_instr:
+                raise RuntimeError("Chat saknar kritisk beteendemarkör: " + marker)
         if zf.read("VERSION").decode().strip() != version:
             raise RuntimeError("Fel VERSION i portable-paketet")
         manifest = json.loads(zf.read("MANIFEST.json"))
