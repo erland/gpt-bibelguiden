@@ -37,8 +37,9 @@ def write_zip(src_dir: Path, out: Path) -> None:
 
 
 def build_custom(stage: Path, version: str) -> None:
-    for rel in ["README.md", "gpt/instructions.md", "gpt/conversation-starters.md", "gpt/gpt-builder-config.md", "docs/creator-notes.md"]:
+    for rel in ["README.md", "gpt/conversation-starters.md", "gpt/gpt-builder-config.md", "docs/creator-notes.md"]:
         copy_file(ROOT / rel, stage / rel)
+    copy_file(ROOT / "assistant/instructions.md", stage / "gpt/instructions.md")
     for src in KNOWLEDGE + TEMPLATES + EXAMPLES:
         copy_file(src, stage / src.relative_to(ROOT))
     (stage / "VERSION").write_text(version + "\n", encoding="utf-8")
@@ -46,7 +47,7 @@ def build_custom(stage: Path, version: str) -> None:
 
 def build_chat(stage: Path, version: str) -> None:
     copy_file(ROOT / "portable/START-HERE.md", stage / "START-HERE.md")
-    copy_file(ROOT / "gpt/instructions.md", stage / "assistant/instructions.md")
+    copy_file(ROOT / "assistant/instructions.md", stage / "assistant/instructions.md")
     copy_file(ROOT / "gpt/conversation-starters.md", stage / "assistant/conversation-starters.md")
     for src in KNOWLEDGE + TEMPLATES + EXAMPLES:
         copy_file(src, stage / src.relative_to(ROOT))
