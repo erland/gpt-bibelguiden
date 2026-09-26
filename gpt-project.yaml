@@ -48,7 +48,12 @@ runtime:
     assessment: docs/claude-opencode-compatibility.md
   openai_plugin:
     enabled: false
-    compatibility: assessment_pending
+    compatibility: equivalent
+    status: assessed_not_active
+    architecture: skills_first
+    activation: not_active
+    blocker: plugin_distribution_and_regression_not_implemented
+    assessment: docs/openai-plugin-compatibility.md
 
 capabilities:
   critical:
