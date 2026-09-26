@@ -1,0 +1,49 @@
+schema_version: 1
+project:
+  id: bibelguiden
+  name: Bibelguiden
+  version: 1.0.0
+
+migration:
+  target_builder_version: 1.5.0
+  strategy: behavior_preserving
+  plan: docs/gpt-builder-1.5-runtime-migration.md
+  total_steps: 7
+
+progress:
+  current_step: 2
+  last_completed_step: 1
+  completed_steps:
+    - 1
+  skipped_steps: []
+
+preservation:
+  canonical_instruction: assistant/instructions.md
+  legacy_instruction_source: gpt/instructions.md
+  canonical_matches_legacy_byte_identical: true
+  preserve_version_1_0_0: true
+  preserve_knowledge_9_of_9: true
+  preserve_templates_5_of_5: true
+  preserve_examples_3_of_3: true
+  preserve_dialog_driven_start: true
+  preserve_max_three_followup_questions: true
+  preserve_reference_plus_link_policy: true
+  preserve_theological_balance: true
+  preserve_study_modes: true
+  preserve_markdown_export: true
+
+runtime_baseline:
+  active:
+    - chat
+    - custom-gpt
+  assessment_pending:
+    - claude
+    - opencode
+    - openai_plugin
+
+next_step:
+  recommended: 2
+  title: Normalisera GPT Byggaren 1.5-kontrakten
+  reason: "Canonical instruktion och preserve-first baseline är etablerade."
+
+human_readable_status: "Steg 1 av 7 i GPT Byggaren 1.5.0-migreringen är klart."
