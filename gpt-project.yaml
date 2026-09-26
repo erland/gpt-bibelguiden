@@ -1,0 +1,74 @@
+schema_version: 1
+project:
+  id: bibelguiden
+  name: Bibelguiden
+  profile: guided_study_assistant
+
+instructions:
+  canonical: assistant/instructions.md
+  legacy_source: gpt/instructions.md
+  preserve_legacy_source_byte_identical: true
+
+knowledge_architecture:
+  canonical_root: knowledge
+  expected_files: 9
+  templates_root: templates
+  expected_templates: 5
+  examples_root: examples
+  expected_examples: 3
+
+runtime:
+  chat_zip:
+    enabled: true
+  custom_gpt:
+    enabled: true
+    instruction:
+      source: assistant/instructions.md
+      packaging_path: gpt/instructions.md
+      legacy_packaging_path_only: true
+      max_characters: 8000
+    knowledge:
+      strategy: exact_tree
+      expected_files: 9
+    templates:
+      expected_files: 5
+    examples:
+      expected_files: 3
+  claude:
+    enabled: false
+    compatibility: equivalent
+    activation: not_active
+    blocker: distribution_and_regression_not_implemented
+    assessment: docs/claude-opencode-compatibility.md
+  opencode:
+    enabled: false
+    compatibility: equivalent
+    activation: not_active
+    blocker: distribution_and_regression_not_implemented
+    assessment: docs/claude-opencode-compatibility.md
+  openai_plugin:
+    enabled: false
+    compatibility: equivalent
+    status: assessed_not_active
+    architecture: skills_first
+    activation: not_active
+    blocker: plugin_distribution_and_regression_not_implemented
+    assessment: docs/openai-plugin-compatibility.md
+
+capabilities:
+  critical:
+    - dialog_driven_study_design
+    - bible_reference_and_link_guidance
+    - theological_balance
+    - structured_markdown_study_material
+  important:
+    - translation_notes
+    - parallel_text_guidance
+    - study_mode_transformation
+    - leader_material
+    - optional_web_research
+
+release:
+  version_file: VERSION
+  preserve_current_version: true
+  current_version: 1.0.0

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, hashlib, json, re, shutil, tempfile, zipfile
+import argparse, hashlib, json, re, shutil, tempfile, zipfile, yaml
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,8 +37,9 @@ def write_zip(src_dir: Path, out: Path) -> None:
 
 
 def build_custom(stage: Path, version: str) -> None:
-    for rel in ["README.md", "gpt/instructions.md", "gpt/conversation-starters.md", "gpt/gpt-builder-config.md", "docs/creator-notes.md"]:
+    for rel in ["README.md", "gpt/conversation-starters.md", "gpt/gpt-builder-config.md", "docs/creator-notes.md"]:
         copy_file(ROOT / rel, stage / rel)
+    copy_file(ROOT / "assistant/instructions.md", stage / "gpt/instructions.md")
     for src in KNOWLEDGE + TEMPLATES + EXAMPLES:
         copy_file(src, stage / src.relative_to(ROOT))
     (stage / "VERSION").write_text(version + "\n", encoding="utf-8")
@@ -46,7 +47,7 @@ def build_custom(stage: Path, version: str) -> None:
 
 def build_chat(stage: Path, version: str) -> None:
     copy_file(ROOT / "portable/START-HERE.md", stage / "START-HERE.md")
-    copy_file(ROOT / "gpt/instructions.md", stage / "assistant/instructions.md")
+    copy_file(ROOT / "assistant/instructions.md", stage / "assistant/instructions.md")
     copy_file(ROOT / "gpt/conversation-starters.md", stage / "assistant/conversation-starters.md")
     for src in KNOWLEDGE + TEMPLATES + EXAMPLES:
         copy_file(src, stage / src.relative_to(ROOT))
@@ -69,12 +70,22 @@ def build_chat(stage: Path, version: str) -> None:
     (stage / "MANIFEST.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def registry_targets():
+    r=yaml.safe_load((ROOT/"runtime-distribution-registry.yaml").read_text(encoding="utf-8"))
+    targets=list(r.get("active_targets",[]) or [])
+    supported={"chat","custom-gpt"}
+    unknown=set(targets)-supported
+    if unknown:
+        raise SystemExit(f"Registry contains unsupported active targets: {sorted(unknown)}")
+    return targets
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--output-dir", default=str(ROOT / "dist"))
     ap.add_argument("--version")
     args = ap.parse_args()
     version = args.version or (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    targets = registry_targets()
     if not SEMVER.fullmatch(version):
         raise SystemExit(f"Ogiltig version: {version!r}. Förväntar SemVer utan inledande v.")
     if len(KNOWLEDGE) != 9:
@@ -87,10 +98,12 @@ def main() -> int:
         base = Path(td)
         custom = base / "custom"
         chat = base / "chat"
-        build_custom(custom, version)
-        build_chat(chat, version)
-        write_zip(custom, out / f"bibelguiden-custom-gpt-v{version}.zip")
-        write_zip(chat, out / f"bibelguiden-chat-v{version}.zip")
+        if "custom-gpt" in targets:
+            build_custom(custom, version)
+            write_zip(custom, out / f"bibelguiden-custom-gpt-v{version}.zip")
+        if "chat" in targets:
+            build_chat(chat, version)
+            write_zip(chat, out / f"bibelguiden-chat-v{version}.zip")
     print(f"Byggde Bibelguiden-distributioner v{version} i {out}")
     return 0
 

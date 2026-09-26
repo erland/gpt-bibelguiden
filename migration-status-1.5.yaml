@@ -1,0 +1,162 @@
+schema_version: 1
+project:
+  id: bibelguiden
+  name: Bibelguiden
+  version: 1.0.0
+
+migration:
+  target_builder_version: 1.5.0
+  strategy: behavior_preserving
+  plan: docs/gpt-builder-1.5-runtime-migration.md
+  total_steps: 7
+
+progress:
+  current_step: 7
+  last_completed_step: 7
+  completed_steps:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+  skipped_steps: []
+
+preservation:
+  canonical_instruction: assistant/instructions.md
+  legacy_instruction_source: gpt/instructions.md
+  canonical_matches_legacy_byte_identical: true
+  preserve_version_1_0_0: true
+  preserve_knowledge_9_of_9: true
+  preserve_templates_5_of_5: true
+  preserve_examples_3_of_3: true
+  preserve_dialog_driven_start: true
+  preserve_max_three_followup_questions: true
+  preserve_reference_plus_link_policy: true
+  preserve_theological_balance: true
+  preserve_study_modes: true
+  preserve_markdown_export: true
+
+gpt_builder_1_5:
+  normalized_contract: gpt-builder-1.5-contract.yaml
+  validation: scripts/validate_gpt_builder_1_5_contract.py
+  canonical_instruction: assistant/instructions.md
+  canonical_matches_legacy_instruction: true
+  dialog_driven_start_preserved: true
+  max_three_followup_questions_preserved: true
+  reference_plus_link_policy_preserved: true
+  theological_balance_preserved: true
+  study_modes_preserved: true
+  markdown_export_preserved: true
+  knowledge_9_of_9_preserved: true
+  templates_5_of_5_preserved: true
+  examples_3_of_3_preserved: true
+  version_1_0_0_preserved: true
+  status: passed
+
+chat_custom_normalization:
+  status: passed
+  canonical_instruction_source: assistant/instructions.md
+  custom_gpt_packaging_path: gpt/instructions.md
+  chat_instruction_path: assistant/instructions.md
+  both_built_from_same_canonical_source: true
+  knowledge_9_of_9_in_both: true
+  templates_5_of_5_in_both: true
+  examples_3_of_3_in_both: true
+  source_policy_markers_verified: true
+  theological_balance_markers_verified: true
+  dialog_start_markers_verified: true
+  markdown_output_markers_verified: true
+  version_1_0_0_preserved: true
+
+runtime_baseline:
+  active:
+    - chat
+    - custom-gpt
+  inactive:
+    claude:
+      compatibility: equivalent
+      blocker: distribution_and_regression_not_implemented
+      assessment: docs/claude-opencode-compatibility.md
+    opencode:
+      compatibility: equivalent
+      blocker: distribution_and_regression_not_implemented
+      assessment: docs/claude-opencode-compatibility.md
+  inactive:
+    openai_plugin:
+      compatibility: equivalent
+      status: assessed_not_active
+      architecture: skills_first
+      activation: not_active
+      blocker: plugin_distribution_and_regression_not_implemented
+      assessment: docs/openai-plugin-compatibility.md
+
+claude_opencode_assessment:
+  status: passed
+  assessment: docs/claude-opencode-compatibility.md
+  canonical_behavior_changed: false
+  claude:
+    compatibility: equivalent
+    activation: not_active
+    blocker: distribution_and_regression_not_implemented
+  opencode:
+    compatibility: equivalent
+    activation: not_active
+    blocker: distribution_and_regression_not_implemented
+
+plugin_assessment:
+  status: passed
+  runtime: openai_plugin
+  compatibility: equivalent
+  architecture: skills_first
+  activation: not_active
+  blocker: plugin_distribution_and_regression_not_implemented
+  assessment: docs/openai-plugin-compatibility.md
+  canonical_behavior_changed: false
+
+runtime_registry:
+  source_of_truth: runtime-distribution-registry.yaml
+  validation: scripts/validate_runtime_distribution_registry.py
+  active_targets:
+    - chat
+    - custom-gpt
+  inactive_candidates:
+    - claude
+    - opencode
+    - openai_plugin
+  exact_artifact_set: true
+  wildcard_runtime_selection: false
+  build_targets_derived_from_registry: true
+  validation_targets_derived_from_registry: true
+
+final_readiness:
+  status: ready_for_merge_after_ci
+  migration_steps_complete: 7
+  migration_steps_total: 7
+  final_gate: scripts/validate_gpt_builder_1_5_migration.py
+  canonical_behavior_preserved: true
+  version_1_0_0_preserved: true
+  knowledge_9_of_9_preserved: true
+  templates_5_of_5_preserved: true
+  examples_3_of_3_preserved: true
+  dialog_driven_start_preserved: true
+  max_three_followup_questions_preserved: true
+  reference_plus_link_policy_preserved: true
+  theological_balance_preserved: true
+  study_modes_preserved: true
+  markdown_export_preserved: true
+  active_targets:
+    - chat
+    - custom-gpt
+  inactive_candidates:
+    - claude
+    - opencode
+    - openai_plugin
+
+next_step:
+  recommended: null
+  title: Migration complete
+  reason: "GPT Byggaren 1.5.0-migreringen är 7/7 komplett."
+
+human_readable_status: "Steg 1–7 av 7 i GPT Byggaren 1.5.0-migreringen är klara. Väntar endast på grön slut-CI för merge-readiness."
