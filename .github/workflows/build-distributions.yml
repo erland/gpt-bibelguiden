@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install validation dependencies
+        run: python3 -m pip install PyYAML
+
       - name: Resolve version
         id: version
         shell: bash
