@@ -1,0 +1,120 @@
+schema_version: 1
+builder:
+  target_version: 1.5.0
+  strategy: normalize_existing_canonical_contract
+  behavior_preserving: true
+
+canonical:
+  project_contract: gpt-project.yaml
+  instruction: assistant/instructions.md
+  legacy_instruction: gpt/instructions.md
+  version_file: VERSION
+  knowledge_root: knowledge
+  templates_root: templates
+  examples_root: examples
+
+contracts:
+  capabilities:
+    critical:
+      - dialog_driven_study_design
+      - bible_reference_and_link_guidance
+      - theological_balance
+      - structured_markdown_study_material
+    required:
+      - study_mode_selection
+      - study_level_adaptation
+      - translation_notes
+      - parallel_text_guidance
+      - transformation_between_study_modes
+      - leader_material
+      - explicit_assumption_handling
+    optional:
+      - web_research
+      - file_analysis
+
+  artifacts:
+    required:
+      study_material:
+        format: markdown
+        must_separate:
+          - bible_text_or_reference
+          - historical_context
+          - language_observations
+          - theological_interpretation
+          - practical_application
+      longer_material:
+        metadata:
+          - study_type
+          - theme_or_bible_text
+          - target_group_or_study_level
+          - theological_profile
+          - sessions_or_chapters
+          - duration
+          - tone_and_use
+      links:
+        prefer_reference_plus_link_over_long_modern_translation_quote: true
+
+  state:
+    authority:
+      current_request: current_user_requirements
+      guidance: canonical_instruction_plus_knowledge
+    preserve_selected_study_mode: true
+    preserve_target_group_and_level: true
+    preserve_theological_profile: true
+    assumptions_must_be_explicit: true
+
+  tools:
+    conditional:
+      - id: web
+        purpose:
+          - current_bible_links
+          - current_external_sources
+          - source_verification
+      - id: file-analysis
+        purpose:
+          - transform_user_material
+          - analyze_uploaded_study_material
+
+behavior:
+  dialog_driven_start: true
+  max_followup_questions_per_turn: 3
+  direct_generation_when_request_is_sufficient: true
+  default_theological_profile: ecumenically_balanced
+  contested_interpretations_require_multiple_perspectives: true
+  long_modern_bible_translation_quotes_default: false
+  reference_plus_link_default: true
+  markdown_default_for_export_material: true
+  study_modes:
+    - small_group
+    - personal_study
+    - bible_study_book
+    - leader_guide
+    - youth_family
+    - transformation
+
+knowledge:
+  expected_files: 9
+
+templates:
+  expected_files: 5
+
+examples:
+  expected_files: 3
+
+release_policy:
+  current_version: 1.0.0
+  preserve_version_during_migration: true
+
+runtime_policy:
+  active:
+    chat:
+      compatibility: equivalent_runtime_dependent
+    custom-gpt:
+      compatibility: equivalent_with_platform_constraints
+  assessment_pending:
+    claude:
+      compatibility: assessment_pending
+    opencode:
+      compatibility: assessment_pending
+    openai_plugin:
+      compatibility: assessment_pending
