@@ -54,3 +54,22 @@ bibelguiden-chat-v1.1.0.zip
 ```
 
 Release-paketen bifogas automatiskt som assets till GitHub Release och bevaras där för framtida nedladdning.
+
+## GPT Byggaren 1.5.0
+
+Migreringen är **7/7 komplett**. Canonical instruktion finns i `assistant/instructions.md`; legacy-källan `gpt/instructions.md` bevaras. Build, validering och aktivt distributionsset härleds från `runtime-distribution-registry.yaml`.
+
+Bevarat genom migreringen:
+- version `1.0.0`
+- 9/9 Knowledge-filer
+- 5/5 templates
+- 3/3 exempel
+- dialogdriven start med högst tre följdfrågor åt gången
+- referens + länk framför längre moderna bibelcitat
+- tydlig åtskillnad mellan bibeltext, historisk bakgrund, språkliga observationer, teologisk tolkning och praktisk tillämpning
+- ekumeniskt balanserad standardprofil
+- transparens när kristna traditioner tolkar olika
+- samtliga sex studielägen
+- Markdown som standard för exportmaterial
+
+Aktiva runtimes är Chat och Custom GPT. Claude Projects, OpenCode och OpenAI Plugin är compatibility-bedömda kandidater men inte aktiva distributionsmål.
